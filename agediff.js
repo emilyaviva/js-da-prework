@@ -7,20 +7,17 @@ function average(arr) {
   return arr.reduce(plus) / arr.length;
 }
 
-function age(p) {
-  return p.died - p.born;
-}
-
 var byName = {};
 ancestry.forEach(function(p) {
   byName[p.name] = p;
 });
 
-// get all people with known mothers
+function hasKnownMother(p) {
+  return p.mother in byName;
+}
 
-var hasMothers = ancestry.map(function(p) {
-  if (p.mother) return p;
-  else return null;
-}).filter(function(p) {
-  if (p) return p;
-});
+function ageDiff(p) {
+  return p.born - byName[p.mother].born;
+}
+
+console.log(average(ancestry.filter(hasKnownMother).map(ageDiff)));
