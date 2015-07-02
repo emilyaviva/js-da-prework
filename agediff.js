@@ -1,4 +1,4 @@
-var ancestry = require('ancestry.js');
+var ancestry = JSON.parse(require('./ancestry.js'));
 
 function average(arr) {
   function plus(a, b) {
@@ -10,28 +10,17 @@ function average(arr) {
 function age(p) {
   return p.died - p.born;
 }
-function male(p) {
-  return p.sex == 'm';
-}
-function female(p) {
-  return p.sex == 'f';
-}
 
 var byName = {};
-ancestry.forEach(function(person) {
-  byName[person.name] = person;
+ancestry.forEach(function(p) {
+  byName[p.name] = p;
 });
 
-function hasKnownMother(p) {
-  return p.mother;
-};
+// get all people with known mothers
 
-function filter(arr, callback) {
-  var called = [];
-  for (var i = 0; i < array.length; i++) {
-    if (callback(arr[i])) {
-      called.push(arr[i]);
-    }
-  }
-  return called;
-}
+var hasMothers = ancestry.map(function(p) {
+  if (p.mother) return p;
+  else return null;
+}).filter(function(p) {
+  if (p) return p;
+});
